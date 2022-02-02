@@ -1,18 +1,19 @@
 import axios from 'axios'
 import { Container } from '@mui/material'
 import { useState, KeyboardEvent, ChangeEvent } from 'react'
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom'
 import Navbar from "./components/Navbar"
 import Searchbar from "./components/Searchbar"
-import { SearchResults } from './types/searchResults'
-import { useNavigate } from 'react-router-dom'
+import { ISearchResults } from './types/searchResults'
+import SearchResultsPage from './components/SearchResultsPage'
 
 export default function App() {
 
   const baseURL = 'https://striveschool-api.herokuapp.com/api/deezer'
 
   const [query, setQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<SearchResults[]>([])
+  const [lastQuery, setLastQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<ISearchResults[]>([])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)
 
@@ -26,6 +27,7 @@ export default function App() {
     try {
        const response = await axios({ baseURL, url })
        setSearchResults(response.data.data)
+       setLastQuery(query)
        setQuery('')
     } catch (error) {
         console.log(error)
@@ -33,13 +35,14 @@ export default function App() {
   }
 
   return (
-    <Router>
+    <BrowserRouter >
     <Navbar />
     <Container maxWidth="xl" style={{ marginTop: '1.5rem' }}>
       <Routes>
         <Route path="/" element={ <Searchbar query={query} handleChange={handleChange} handleSubmit={handleSubmit} /> } />
+        <Route path="/search-results" element={ <SearchResultsPage lastQuery={lastQuery} data={searchResults} /> } />
       </Routes>
     </Container>
-    </Router>
+    </BrowserRouter >
   )
 }

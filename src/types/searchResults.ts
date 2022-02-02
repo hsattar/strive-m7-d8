@@ -1,4 +1,4 @@
-export interface SearchResults {
+export interface ISearchResults {
     id:                      number;
     readable:                boolean;
     title:                   string;
