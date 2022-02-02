@@ -40,7 +40,7 @@ export default function App() {
     <Container maxWidth="xl" style={{ marginTop: '1.5rem' }}>
       <Routes>
         <Route path="/" element={ <Searchbar query={query} handleChange={handleChange} handleSubmit={handleSubmit} /> } />
-        <Route path="/search-results" element={ <SearchResultsPage lastQuery={lastQuery} data={searchResults} /> } />
+        <Route path="/search-results" element={ <SearchResultsPage query={query} handleChange={handleChange} handleSubmit={handleSubmit} lastQuery={lastQuery} data={searchResults} /> } />
       </Routes>
     </Container>
     </BrowserRouter >

@@ -1,4 +1,4 @@
-import { Card } from "@mui/material"
+import { Card, CardContent, CardHeader, CardMedia, Typography } from "@mui/material"
 import { ISearchResults } from "../types/searchResults"
 
 interface Props {
@@ -8,7 +8,13 @@ interface Props {
 export default function SingleSearchResult({ result }: Props) {
     return (
         <Card style={{ padding: '1rem' }}>
-            {result.title}
+            <Typography variant="h5" noWrap>{result.title_short}</Typography>
+            <Typography variant="h6" noWrap>{result.artist.name}</Typography>
+            <CardMedia
+                component="img"
+                image={result.album.cover_xl}
+                alt={result.album.title}
+            />
         </Card>
     )
 }

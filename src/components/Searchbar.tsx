@@ -3,9 +3,9 @@ import { ChangeEvent, KeyboardEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface Props {
-    query?: string
-    handleChange?: (e: ChangeEvent<HTMLInputElement>) => void
-    handleSubmit?: (e: KeyboardEvent<HTMLDivElement>) => void
+    query: string
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void
+    handleSubmit: (e: KeyboardEvent<HTMLDivElement>) => void
 }
 
 export default function Searchbar({ query, handleChange, handleSubmit }: Props) {
