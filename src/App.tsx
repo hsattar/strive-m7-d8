@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar"
 import Searchbar from "./components/Searchbar"
 import { ISearchResults } from './types/searchResults'
 import SearchResultsPage from './components/SearchResultsPage'
+import TrackDetails from './components/TrackDetails'
 
 export default function App() {
 
@@ -19,11 +20,11 @@ export default function App() {
 
   const handleSubmit = (e: KeyboardEvent<HTMLDivElement>) => {
       if (e.code === 'Enter') {
-        axiosRequest(`/search?q=${query}`)
+        fetchData(`/search?q=${query}`)
       }
   }
 
-  const axiosRequest = async (url: string) => {
+  const fetchData = async (url: string) => {
     try {
        const response = await axios({ baseURL, url })
        setSearchResults(response.data.data)
@@ -41,6 +42,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={ <Searchbar query={query} handleChange={handleChange} handleSubmit={handleSubmit} /> } />
         <Route path="/search-results" element={ <SearchResultsPage query={query} handleChange={handleChange} handleSubmit={handleSubmit} lastQuery={lastQuery} data={searchResults} /> } />
+        <Route path="/track/:trackId" element={ <TrackDetails /> } />
       </Routes>
     </Container>
     </BrowserRouter >
