@@ -4,25 +4,29 @@ import { useState, KeyboardEvent, ChangeEvent } from 'react'
 import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom'
 import Navbar from "./components/Navbar"
 import Searchbar from "./components/Searchbar"
+import { SearchResults } from './types/searchResults'
+import { useNavigate } from 'react-router-dom'
 
 export default function App() {
 
   const baseURL = 'https://striveschool-api.herokuapp.com/api/deezer'
 
   const [query, setQuery] = useState('')
-  // const [searchResults, searchResults] = useState()
+  const [searchResults, setSearchResults] = useState<SearchResults[]>([])
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => setQuery(e.target.value)
 
   const handleSubmit = (e: KeyboardEvent<HTMLDivElement>) => {
       if (e.code === 'Enter') {
-        alert(query)
+        axiosRequest(`/search?q=${query}`)
       }
   }
 
-  const axiosRequest = async (query: string) => {
+  const axiosRequest = async (url: string) => {
     try {
-       const response = await axios({ baseURL, url: query })
+       const response = await axios({ baseURL, url })
+       setSearchResults(response.data.data)
+       setQuery('')
     } catch (error) {
         console.log(error)
     }
